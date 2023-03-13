@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+}
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav_item {
+    cursor: pointer;
+    background-color: blue;
+    flex-basis: 34%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.2s linear, color 0.2s linear;
+}
+
+.nav_item:hover {
+    background-color: yellow;
+    color: black;
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 auto;
+    min-width: 400px;
+}
+
+/*loader*/
+.loader {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    background-image: linear-gradient(#fff 16px, transparent 0), linear-gradient(#ff3d00 16px, transparent 0),
+        linear-gradient(#ff3d00 16px, transparent 0), linear-gradient(#fff 16px, transparent 0);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-position: left top, left bottom, right top, right bottom;
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        width: 64px;
+        height: 64px;
+        transform: rotate(0deg);
+    }
+    50% {
+        width: 30px;
+        height: 30px;
+        transform: rotate(180deg);
+    }
+    100% {
+        width: 64px;
+        height: 64px;
+        transform: rotate(360deg);
+    }
+}
+
+.box_loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.438);
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.show {
+    display: flex;
+}
