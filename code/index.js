@@ -23,8 +23,8 @@ const nav = document.querySelector(".nav")
                     show(info)
                 })
         } else if (e.target.dataset.link === "star") {
-
             // вивести всі 60 планет з https://swapi.dev/api/planets/
+            getPlanets('https://swapi.dev/api/planets/');
             
         } else if (e.target.dataset.link === "todo") {
             req("https://jsonplaceholder.typicode.com/todos")
@@ -36,17 +36,28 @@ const nav = document.querySelector(".nav")
         }
     })
 
-function show(data = []) {
-    if (!Array.isArray(data)) return;
+function getPlanets(url, rerequest = 0) {
+    req(url)
+    .then((info) => {
+        show(info.results, rerequest);
+        if (info.next) getPlanets(info.next, rerequest + 1);
+    })
+}
 
+function show(data = [], rerequest = 0) {
+    if (!Array.isArray(data)) {
+        hideLoader();
+        alert("Some mistake");
+        return;
+    }
     const tbody = document.querySelector("tbody");
-  tbody.innerHTML = ""
-    const newArr = data.map(({txt, rate, exchangedate, title, completed }, i) => {
+    if (rerequest===0) tbody.innerHTML = "";
+    const newArr = data.map(({txt, rate, exchangedate, title, completed, name, diameter, population }, i) => {
         return {
-            id: i + 1,
-            name : txt || title,
-            info1 : rate || completed,
-            info2 : exchangedate || "тут пусто"
+            id: i + 1 + 10 * rerequest,
+            name : txt || title || name,
+            info1 : rate || completed || showInfo('diameter', diameter),
+            info2 : exchangedate || showInfo('population', population) || "тут пусто"
         }
     });
 
@@ -60,6 +71,14 @@ function show(data = []) {
         </tr>
         `)
     })
+    hideLoader();
+}
 
+function showInfo(infoName, infoValue){
+    if (!infoValue) return false
+    else return infoName + ': ' + infoValue;
+}
+
+function hideLoader(){
     document.querySelector(".box_loader").classList.remove("show")
 }
